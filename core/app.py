@@ -3,6 +3,7 @@ from appium import webdriver
 from time import sleep
 from prop import *
 from common import *
+from warnings import filterwarnings
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -71,6 +72,7 @@ def find_elements(driver, locator):
 
 def tap(driver, locator, idx=None):
     """ simulate tap gesture on single or multiple elements"""
+    filterwarnings("ignore")
     parse_locator(locator, "Tap")
     if idx:
         tap_obj = getattr(driver, 'find_elements')(locator_type, locator_path)[idx]

@@ -105,6 +105,9 @@ class StockView:
                    "xpath", "Place Order")
     watchlist_star_icon = ("stock.market.simulator.stock.virtual.trading:id/action_favorite", "id", "Watchlist Star Icon")
     recent_news_text = ('//android.widget.TextView[@text="Recent News"]', "xpath", "Recent News Text")
+    list_of_recent_news_text = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/linearLayout6"]/'
+                                'android.widget.TextView[@resource-id="stock.market.'
+                                'simulator.stock.virtual.trading:id/textView14"]', "xpath", "News Topic")
 
     def __init__(self, driver):
         self.driver = driver
@@ -135,4 +138,22 @@ class StockView:
         explicit_wait(self.driver, self.stock_buy_button)
         explicit_wait(self.driver, self.select_one_month)
         return self
+
+    @classmethod
+    def scroll_to_news_feed(cls, driver):
+        # try few times to scroll to the news feed section
+        count = 0
+        end_y = -400
+        while count <= 5:
+            print("checking ")
+            sleep(3)
+            swipe(driver, (150, 400, 150, end_y))
+            element_news_section = find_element(driver, StockView.recent_news_text)
+            element_news_title = find_element(driver, StockView.list_of_recent_news_text)
+            if element_news_title and element_news_section:
+                print("{} Scrolling to Recent News".format(generate_formatted_timestamp()))
+                return
+            count += 1
+            end_y = -100
+        raise "Recent News Text is not found"
 
