@@ -29,6 +29,9 @@ class AccountView:
     new_features_got_it = ("android:id/button1", "id", "new features got it")
     apple_stock_tab = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/textView" '
                            'and @text="AAPL Apple Inc."]', "xpath", "Robinhood Markets")
+    watchlist_tab_line = ('//android.widget.TextView[@text="Watchlist"]', "xpath", "WatchList")
+    list_of_watchlist_stocks = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/constraintLayout2"]'
+                                '/android.widget.TextView', "xpath", "List of Watchlist Stocks")
 
     def accept_new_features_modal(self, driver):
         if is_element_present(driver, self.new_features_got_it, wait_time=10):
@@ -44,6 +47,12 @@ class AccountView:
         explicit_wait(driver, self.apple_stock_tab)
         tap(driver, self.apple_stock_tab)
         return self
+
+    @classmethod
+    def get_list_of_watchlist_stocks(cls, driver):
+        explicit_wait(driver, AccountView.watchlist_tab_line)
+        el = find_elements(driver, AccountView.list_of_watchlist_stocks)
+        return map(lambda x: x.text, el)
 
 
 class OrderDetailsView:
@@ -91,16 +100,20 @@ class StockView:
                         "xpath", "Total Value")
     place_order = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/btnPlaceOrder" and @text="PLACE ORDER"]',
                    "xpath", "Place Order")
+    watchlist_star_icon = ("stock.market.simulator.stock.virtual.trading:id/action_favorite", "id", "Watchlist Star Icon")
 
-    def buy_market_order(self, driver, shares_count):
-        tap(driver, self.stock_buy_button)
-        explicit_wait(driver, self.select_market_buy)
-        tap(driver, self.select_market_buy)
-        explicit_wait(driver, self.shares_input)
-        input_text(driver, self.shares_input, shares_count*10)
-        share_value = return_text(driver, self.share_value)
-        total_value = return_text(driver, self.total_share_price)
-        tap(driver, self.place_order)
+    def __init__(self, driver):
+        self.driver = driver
+
+    def buy_market_order(self, shares_count):
+        tap(self.driver, self.stock_buy_button)
+        explicit_wait(self.driver, self.select_market_buy)
+        tap(self.driver, self.select_market_buy)
+        explicit_wait(self.driver, self.shares_input)
+        input_text(self.driver, self.shares_input, shares_count*10)
+        share_value = return_text(self.driver, self.share_value)
+        total_value = return_text(self.driver, self.total_share_price)
+        tap(self.driver, self.place_order)
 
         order_details = {
             "share_value": share_value,
@@ -109,7 +122,11 @@ class StockView:
 
         return order_details
 
-    def wait_for_stock_page_load(self, driver):
-        explicit_wait(driver, self.stock_buy_button)
-        explicit_wait(driver, self.select_one_month)
+    def add_to_watchlist(self):
+        explicit_wait(self.driver, self.watchlist_star_icon)
+        tap(self.driver, self.watchlist_star_icon)
+
+    def wait_for_stock_page_load(self):
+        explicit_wait(self.driver, self.stock_buy_button)
+        explicit_wait(self.driver, self.select_one_month)
         return self

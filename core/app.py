@@ -121,3 +121,9 @@ def return_text(driver, locator, idx=None):
     else:
         parse_locator(locator, "Return text at index {} of".format(idx))
         return driver.find_elements(locator_type, locator_path)[idx].text
+
+
+def back(driver):
+    """ Simulate user clicking  back button. """
+    driver.back()
+    print('{} Pressed browser back button'.format(generate_formatted_timestamp()))
