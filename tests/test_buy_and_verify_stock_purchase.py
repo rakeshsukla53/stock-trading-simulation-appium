@@ -20,6 +20,10 @@ class BuyAndVerifyStockPurchase(unittest.TestCase):
         AccountView()\
             .accept_new_features_modal(driver)\
             .search_and_click_stock(driver)
+        shares_count = 10
+        StockView()\
+            .wait_for_stock_page_load(driver)\
+            .buy_market_order(driver, shares_count)
 
     def tearDown(self) -> None:
         self.driver.quit()

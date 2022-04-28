@@ -16,3 +16,4 @@ android_app = [
 appium_webdriver_host = "http://localhost:4723/wd/hub"
 webdriver_start_retry = 5
 implicitly_wait_time = 6
+explicit_wait_time = 5

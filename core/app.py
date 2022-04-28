@@ -103,10 +103,20 @@ def is_element_present(driver, locator, wait_time=2):
         driver.implicitly_wait(implicitly_wait_time)
 
 
-def explicit_wait(driver, locator, timeout=explicit_wait_timeout, interval=0.5):
+def explicit_wait(driver, locator, timeout=explicit_wait_time, interval=0.5):
     """ Explicit wait for an element to be displayed on the page. """
     if is_element_present(driver, locator):
         return
     parse_locator(locator, 'Wait for element is displayed:')
     locator_tuple = (locator_type, locator_path)
-    # WebDriverWait(driver, timeout, interval).until(EC.visibility_of_element_located(locator_tuple))
+    WebDriverWait(driver, timeout, interval).until(EC.visibility_of_element_located(locator_tuple))
+
+
+def return_text(driver, locator, idx=None):
+    """Return text of an element."""
+    if idx is None:
+        parse_locator(locator, 'Return text of')
+        return driver.find_element(locator_type, locator_path).text
+    else:
+        parse_locator(locator, "Return text at index {} of".format(idx))
+        return driver.find_elements(locator_type, locator_path)[idx].text
