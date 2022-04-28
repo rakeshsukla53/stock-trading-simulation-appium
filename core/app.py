@@ -71,6 +71,7 @@ def find_elements(driver, locator):
 def tap(driver, locator, idx=None):
     """ simulate tap gesture on single or multiple elements"""
     parse_locator(locator, "Tap")
+    print("{} Tap {}".format(generate_formatted_timestamp(), locator[2]))
     if idx:
         tap_obj = getattr(driver, 'find_elements')(locator_type, locator_path)[idx]
     else:
