@@ -17,23 +17,25 @@ class BuyAndVerifyStockPurchase(unittest.TestCase):
         driver = self.driver
         SelectCurrencyView.select_us_currency(driver)
         EnterFundAmountView.click_on_continue(driver)
-        AccountView()\
-            .accept_new_features_modal(driver)\
-            .search_and_click_stock(driver)
+        AccountView(driver)\
+            .accept_new_features_modal()\
+            .search_and_click_stock()
         shares_count = 10
-        order_details_execution = StockView()\
-            .wait_for_stock_page_load(driver)\
-            .buy_market_order(driver, shares_count)
+        order_details_execution = StockView(driver)\
+            .wait_for_stock_page_load()\
+            .buy_market_order(shares_count)
         print("{} Order details during execution {}".format(generate_formatted_timestamp(), order_details_execution))
         share_value = order_details_execution["share_value"]
         order_details_history = OrderDetailsView.get_order_history_details(driver, share_value)
         print("{} Order details from history page {}".format(generate_formatted_timestamp(), order_details_execution))
         # verify order is properly executed
+        formatted_share_price = round(float(order_details_history["PRICE"]), 2)
+        share_value = round(float(share_value), 2)
         self.assertEqual(order_details_history["SYMBOL"], AccountView.apple_ticker_symbol)
         self.assertEqual(order_details_history["ACTION"], "Buy")
         self.assertIn(generate_string_formatted_date(), order_details_history["DATE"])
-        self.assertEqual(order_details_history["PRICE"], share_value)
-        self.assertEqual(int(order_details_history["QUANTITY"]), shares_count)
+        self.assertEqual(formatted_share_price, share_value)
+        self.assertEqual(int(order_details_history["QUANTITY"]), int(shares_count))
         self.assertEqual(order_details_history["TOTAL"], order_details_execution["total_value"])
 
     def tearDown(self) -> None:

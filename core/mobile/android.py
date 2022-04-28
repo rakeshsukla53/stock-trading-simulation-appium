@@ -33,19 +33,22 @@ class AccountView:
     list_of_watchlist_stocks = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/constraintLayout2"]'
                                 '/android.widget.TextView', "xpath", "List of Watchlist Stocks")
 
-    def accept_new_features_modal(self, driver):
-        if is_element_present(driver, self.new_features_got_it, wait_time=10):
-            tap(driver, self.new_features_got_it)
+    def __init__(self, driver):
+        self.driver = driver
+
+    def accept_new_features_modal(self):
+        if is_element_present(self.driver, self.new_features_got_it, wait_time=10):
+            tap(self.driver, self.new_features_got_it)
         return self
 
-    def search_and_click_stock(self, driver, stock_ticker_symbol=None):
+    def search_and_click_stock(self, stock_ticker_symbol=None):
         if not stock_ticker_symbol:
             stock_ticker_symbol = self.apple_ticker_symbol
-        explicit_wait(driver, self.search_symbol_name_text)
-        input_text(driver, self.search_symbol_name_text, stock_ticker_symbol)
-        tap(driver, self.search_symbol_name_text)
-        explicit_wait(driver, self.apple_stock_tab)
-        tap(driver, self.apple_stock_tab)
+        explicit_wait(self.driver, self.search_symbol_name_text)
+        input_text(self.driver, self.search_symbol_name_text, stock_ticker_symbol)
+        tap(self.driver, self.search_symbol_name_text)
+        explicit_wait(self.driver, self.apple_stock_tab)
+        tap(self.driver, self.apple_stock_tab)
         return self
 
     @classmethod
