@@ -127,3 +127,9 @@ def back(driver):
     """ Simulate user clicking  back button. """
     driver.back()
     print('{} Pressed browser back button'.format(generate_formatted_timestamp()))
+
+
+def swipe(driver, positions, duration=1000):
+    """Swipe action. X/Y coordinates required for both start and end."""
+    start_x, start_y, end_x, end_y = positions
+    driver.swipe(start_x, start_y, end_x, end_y, duration)

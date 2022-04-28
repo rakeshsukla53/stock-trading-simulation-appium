@@ -101,6 +101,7 @@ class StockView:
     place_order = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/btnPlaceOrder" and @text="PLACE ORDER"]',
                    "xpath", "Place Order")
     watchlist_star_icon = ("stock.market.simulator.stock.virtual.trading:id/action_favorite", "id", "Watchlist Star Icon")
+    recent_news_text = ('//android.widget.TextView[@text="Recent News"]', "xpath", "Recent News Text")
 
     def __init__(self, driver):
         self.driver = driver
@@ -125,8 +126,10 @@ class StockView:
     def add_to_watchlist(self):
         explicit_wait(self.driver, self.watchlist_star_icon)
         tap(self.driver, self.watchlist_star_icon)
+        return self
 
     def wait_for_stock_page_load(self):
         explicit_wait(self.driver, self.stock_buy_button)
         explicit_wait(self.driver, self.select_one_month)
         return self
+
