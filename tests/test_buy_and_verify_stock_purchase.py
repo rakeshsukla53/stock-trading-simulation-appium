@@ -24,11 +24,13 @@ class BuyAndVerifyStockPurchase(unittest.TestCase):
         order_details_execution = StockView()\
             .wait_for_stock_page_load(driver)\
             .buy_market_order(driver, shares_count)
+        print("{} Order details during execution {}".format(generate_formatted_timestamp(), order_details_execution))
         share_value = order_details_execution["share_value"]
         order_details_history = OrderDetailsView.get_order_history_details(driver, share_value)
+        print("{} Order details from history page {}".format(generate_formatted_timestamp(), order_details_execution))
         # verify order is properly executed
         self.assertEqual(order_details_history["SYMBOL"], AccountView.apple_ticker_symbol)
-        self.assertEqual(order_details_history["ACITON"], "Buy")
+        self.assertEqual(order_details_history["ACTION"], "Buy")
         self.assertIn(generate_string_formatted_date(), order_details_history["DATE"])
         self.assertEqual(order_details_history["PRICE"], share_value)
         self.assertEqual(order_details_history["QUANTITY"], shares_count)

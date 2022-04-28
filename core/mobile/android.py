@@ -64,14 +64,15 @@ class OrderDetailsView:
     def get_order_history_details(cls, driver,  share_value):
         # make sure you are in the account view page
         explicit_wait(driver, OrderDetailsView.order_history_tab)
+        tap(driver, OrderDetailsView.order_history_tab)
         share_value_locator = ('//android.widget.TextView[@text="${}"]'.format(share_value), "xpath",
                                "Share Price {} Link".format(share_value))
         explicit_wait(driver, share_value_locator)
         tap(driver, share_value_locator)
         # create order details object
         order_details = {}
-        list_order_details_keys = find_elements(driver, OrderDetailsView.order_details_keys)
-        list_order_details_values = find_elements(driver, OrderDetailsView.order_details_values)
+        list_order_details_keys = map(lambda x: x.text, find_elements(driver, OrderDetailsView.order_details_keys))
+        list_order_details_values = map(lambda x: x.text, find_elements(driver, OrderDetailsView.order_details_values))
         for key, value in zip(list_order_details_keys, list_order_details_values):
             order_details[key] = value
 
@@ -102,7 +103,7 @@ class StockView:
         tap(driver, self.place_order)
 
         order_details = {
-            "share_price": share_value,
+            "share_value": share_value,
             "total_value": total_value
         }
 

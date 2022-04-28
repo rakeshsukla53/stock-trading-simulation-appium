@@ -42,7 +42,8 @@ def parse_locator(value, description=None):
             locator_path, locator_type = value[0], value[1].lower()
             try:
                 if description and value[2]:
-                    print(str(description) + " " + str(value[2]))
+                    text = str(description) + " " + str(value[2])
+                    print("{} {}".format(generate_formatted_timestamp(), text))
             except IndexError:
                 pass
         else:
@@ -71,7 +72,6 @@ def find_elements(driver, locator):
 def tap(driver, locator, idx=None):
     """ simulate tap gesture on single or multiple elements"""
     parse_locator(locator, "Tap")
-    print("{} Tap {}".format(generate_formatted_timestamp(), locator[2]))
     if idx:
         tap_obj = getattr(driver, 'find_elements')(locator_type, locator_path)[idx]
     else:
