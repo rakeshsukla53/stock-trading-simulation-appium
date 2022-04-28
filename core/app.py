@@ -58,13 +58,13 @@ def implicitly_wait(driver, timeout=implicitly_wait_time):
 
 def find_element(driver, locator):
     """Find a single WebElement"""
-    locator_type, locator_path = parse_locator(locator, 'Find element')
+    parse_locator(locator, 'Find element')
     return driver.find_element(locator_type, locator_path)
 
 
 def find_elements(driver, locator):
     """Find a list of WebElements."""
-    locator_type, locator_path = parse_locator(locator, 'Find elements')
+    parse_locator(locator, 'Find elements')
     return driver.find_elements(locator_type, locator_path)
 
 

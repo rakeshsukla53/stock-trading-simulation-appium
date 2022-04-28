@@ -48,6 +48,7 @@ class AccountView:
 
 
 class OrderDetailsView:
+    order_history_tab = ('//android.widget.TextView[@text="ORDER HISTORY"]', "xpath", "Order History")
     shares_count = ("stock.market.simulator.stock.virtual.trading:id/tvShare", "id", "Shares Count")
     share_value = ("stock.market.simulator.stock.virtual.trading:id/tvShareValue", "id", "Shares Value")
     shares_total_value = ("stock.market.simulator.stock.virtual.trading:id/tvTotal", "id", "Shares Total Value")
@@ -55,6 +56,27 @@ class OrderDetailsView:
     buy_order_text_link = ("stock.market.simulator.stock.virtual.trading:id/textView7", "id", "Buy Order Link")
     order_details = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/linearLayout4"]', "xpath",
                      "Order Details")
+    order_details_keys = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/textView8"]', "xpath",
+                          "Order Details Key")
+    order_details_values = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/textView9"]', "xpath",
+                            "Order Details Value")
+
+    @classmethod
+    def get_order_history_details(cls, driver,  share_value):
+        # make sure you are in the account view page
+        explicit_wait(driver, OrderDetailsView.order_history_tab)
+        share_value_locator = ('//android.widget.TextView[@text="${}"]'.format(share_value), "xpath",
+                               "Share Price {} Link".format(share_value))
+        explicit_wait(driver, share_value_locator)
+        tap(driver, share_value_locator)
+        # create order details object
+        order_details = {}
+        list_order_details_keys = find_elements(driver, OrderDetailsView.order_details_keys)
+        list_order_details_values = find_elements(driver, OrderDetailsView.order_details_values)
+        for key, value in zip(list_order_details_keys, list_order_details_values):
+            order_details[key] = value
+
+        return order_details
 
 
 class StockView:
@@ -70,7 +92,7 @@ class StockView:
     place_order = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/btnPlaceOrder" and @text="PLACE ORDER"]',
                    "xpath", "Place Order")
 
-    def buy_market_order(self, driver, shares_count=10):
+    def buy_market_order(self, driver, shares_count):
         tap(driver, self.stock_buy_button)
         explicit_wait(driver, self.select_market_buy)
         tap(driver, self.select_market_buy)

@@ -21,9 +21,18 @@ class BuyAndVerifyStockPurchase(unittest.TestCase):
             .accept_new_features_modal(driver)\
             .search_and_click_stock(driver)
         shares_count = 10
-        StockView()\
+        order_details_execution = StockView()\
             .wait_for_stock_page_load(driver)\
             .buy_market_order(driver, shares_count)
+        share_value = order_details_execution["share_value"]
+        order_details_history = OrderDetailsView.get_order_history_details(driver, share_value)
+        # verify order is properly executed
+        self.assertEqual(order_details_history["SYMBOL"], AccountView.apple_ticker_symbol)
+        self.assertEqual(order_details_history["ACITON"], "Buy")
+        self.assertIn(generate_string_formatted_date(), order_details_history["DATE"])
+        self.assertEqual(order_details_history["PRICE"], share_value)
+        self.assertEqual(order_details_history["QUANTITY"], shares_count)
+        self.assertEqual(order_details_history["TOTAL"], order_details_execution["total_value"])
 
     def tearDown(self) -> None:
         self.driver.quit()

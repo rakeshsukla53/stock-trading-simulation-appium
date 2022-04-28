@@ -24,3 +24,8 @@ def on_platforms(platforms):
             name = "%s_%s" % (base_class.__name__, i + 1)
             module[name] = type(name, (base_class,), d)
     return decorator
+
+
+def generate_string_formatted_date():
+    """ return date output in the form of Apr 25, 2022 """
+    return strftime("%b %d, %Y")
