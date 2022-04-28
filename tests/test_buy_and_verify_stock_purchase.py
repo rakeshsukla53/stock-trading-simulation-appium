@@ -33,7 +33,7 @@ class BuyAndVerifyStockPurchase(unittest.TestCase):
         self.assertEqual(order_details_history["ACTION"], "Buy")
         self.assertIn(generate_string_formatted_date(), order_details_history["DATE"])
         self.assertEqual(order_details_history["PRICE"], share_value)
-        self.assertEqual(order_details_history["QUANTITY"], shares_count)
+        self.assertEqual(int(order_details_history["QUANTITY"]), shares_count)
         self.assertEqual(order_details_history["TOTAL"], order_details_execution["total_value"])
 
     def tearDown(self) -> None:
