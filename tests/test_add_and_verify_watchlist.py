@@ -1,7 +1,4 @@
 import unittest
-from common import *
-from app import *
-from prop import *
 from mobile.android import *
 
 
@@ -17,9 +14,9 @@ class AddandVerifyWatchList(unittest.TestCase):
         driver = self.driver
         SelectCurrencyView.select_us_currency(driver)
         EnterFundAmountView.click_on_continue(driver)
-        AccountView() \
-            .accept_new_features_modal(driver) \
-            .search_and_click_stock(driver)
+        AccountView(driver) \
+            .accept_new_features_modal() \
+            .search_and_click_stock()
         StockView(driver)\
             .wait_for_stock_page_load()\
             .add_to_watchlist()

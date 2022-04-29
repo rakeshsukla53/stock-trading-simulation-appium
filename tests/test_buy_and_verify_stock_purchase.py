@@ -1,7 +1,4 @@
 import unittest
-from common import *
-from app import *
-from prop import *
 from mobile.android import *
 
 

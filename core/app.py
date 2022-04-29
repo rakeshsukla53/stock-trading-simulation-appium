@@ -1,4 +1,3 @@
-import sys
 from appium import webdriver
 from time import sleep
 from prop import *
@@ -7,10 +6,7 @@ from warnings import filterwarnings
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.common.touch_action import TouchAction
-from appium.webdriver.common.multi_action import MultiAction
 
 
 def start_driver(command_executor=appium_webdriver_host, desired_capabilities=None):
