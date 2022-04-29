@@ -12,7 +12,7 @@ protect against change. If a new tool becomes available, all tests will remain r
 
 `pytest` - This is a really mature test runner for Python Programming Language
 
-`appium` - This technology is a leader in mobile automation because of different language bindings and community support 
+`appium` - Technology leader in mobile automation for both android and iOS
 
 `python` - This is also a widely used programming language and easy to learn. The ecosystem is really specifically 
 when it comes to test automation  
@@ -50,4 +50,38 @@ android_app = [
 
 Step 1 - Install appium `npm install -g appium `
 
-Step 2 - 
+Step 2 - Make sure you have `python3` install in the system
+
+Step 3 - Git clone this project, setup a virtual environment and install all the dependencies 
+
+    git clone <project_url>
+
+    cd stock-simulator-automation
+    
+    pip3 install virtualenv
+    
+    virtualenv venv 
+    
+    source venv/bin/activate
+    
+    pip install -r requirements.txt
+
+Step 4 - Download Android Studio and make sure `Pixel 2 API 30` virtual device is setup 
+
+![](images/device-configuration.png)
+![](images/pixel-2-device.png)
+
+
+Step 5 - Make sure `ANDROID_HOME` and `JAVA_HOME` are setup in your environment 
+
+    export ANDROID_HOME=/Users/<user_name>/Library/Android/sdk/
+    export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-18.0.1.jdk/Contents/Home/
+
+
+# Running the tests 
+
+| Scenario |           command                                      |
+|------|:------------------------------------------------------:|
+| Buy a stock | py.test -s tests/test_buy_and_verify_stock_purchase.py |
+| Access news feed about a company |   py.test -s tests/test_verify_news_feed_company.py  |
+| Add a company to watchlist     |    py.test -s tests/test_add_and_verify_watchlist.py   |
