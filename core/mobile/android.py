@@ -174,6 +174,7 @@ class StockView:
         end_y = -400
         while count <= 5:
             sleep(3)
+            # the swipe coordinates will only work for Pixel 2 and similar device sizes
             swipe(driver, (150, 400, 150, end_y))
             element_news_section = find_element(driver, StockView.recent_news_text)
             element_news_title = find_element(driver, StockView.list_of_recent_news_text)
