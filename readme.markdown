@@ -50,29 +50,29 @@ android_app = [
 
 # Setup Instructions 
 
-Step 1 - Install appium `npm install -g appium `
+**Step 1** - Install appium `npm install -g appium `
 
-Step 2 - Make sure you have `python3` install in the system
+**Step 2** - Make sure you have `python3` install in the system
 
-Step 3 - Download Android Studio and make sure `Pixel 2 API 30` virtual device is setup
+**Step 3** - Download Android Studio and make sure `Pixel 2 API 30` virtual device is setup
 
 ![](images/device-configuration.png)
 ![](images/pixel-2-device.png)
 
 
-Step 4 - Make sure `ANDROID_HOME` and `JAVA_HOME` are setup in your environment
+**Step 4** - Make sure `ANDROID_HOME` and `JAVA_HOME` are setup in your environment
 
     export ANDROID_HOME=/Users/<user_name>/Library/Android/sdk/
     export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-18.0.1.jdk/Contents/Home/
 
-Step 6 - Make sure your android emulator is running. You can check by running `adb devices` command
+**Step 5** - Make sure your android emulator is running. You can check by running `adb devices` command
 
     > adb devices
     List of devices attached
     emulator-5554	device
 
 
-Step 7 - Git clone this project, setup a virtual environment and install all the dependencies 
+**Step 6** - Git clone this project, setup a virtual environment and install all the dependencies 
 
     git clone <project_url>
 
