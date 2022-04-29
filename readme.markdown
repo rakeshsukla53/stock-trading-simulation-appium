@@ -15,7 +15,7 @@ protect against change. If a new tool becomes available, all tests will remain r
 `appium` - Technology leader in mobile automation for both android and iOS
 
 `python` - This is also a widely used programming language and easy to learn. The ecosystem for test automation is great
-for python
+in python
 
 
 # Project Structure 
