@@ -22,6 +22,7 @@ class AddandVerifyWatchList(unittest.TestCase):
             .add_to_watchlist()
         back(driver)
         watchlist_element = AccountView.get_list_of_watchlist_stocks(driver)
+        print("{} Watchlist Elements {}".format(generate_formatted_timestamp(), watchlist_element))
         self.assertIn("AAPL", watchlist_element)
         self.assertIn("Apple Inc.", watchlist_element)
 

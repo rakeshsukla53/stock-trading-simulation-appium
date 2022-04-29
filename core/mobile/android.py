@@ -56,7 +56,7 @@ class AccountView:
     def get_list_of_watchlist_stocks(cls, driver):
         explicit_wait(driver, AccountView.watchlist_tab_line)
         el = find_elements(driver, AccountView.list_of_watchlist_stocks)
-        return map(lambda x: x.text, el)
+        return list(map(lambda x: x.text, el))
 
 
 class OrderDetailsView:
