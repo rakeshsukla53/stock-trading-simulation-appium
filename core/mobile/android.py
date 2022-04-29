@@ -153,12 +153,13 @@ class StockView:
         """ Long press by coordinate and move along the graph. """
         action = TouchAction(self.driver)
         x = random.randint(600, 800)
-        action.long_press(x=400, y=1000).wait(5000).move_to(x=x, y=1000).perform()
+        # this set of x and y coordinates will only on Pixel 2 and similar mobile phones
+        action.long_press(x=400, y=1000).wait(2000).move_to(x=x, y=1000).perform()
         print("{} date information {}".format(generate_formatted_timestamp(),
                                               return_text(self.driver, self.date_text)))
         print("{} price information {}".format(generate_formatted_timestamp(),
                                                return_text(self.driver, self.share_value)))
-        action.long_press(x=400, y=1000).wait(5000).move_to(x=x, y=1000).release().perform()
+        action.long_press(x=400, y=1000).wait(2000).move_to(x=x, y=1000).release().perform()
         return self
 
     def wait_for_stock_page_load(self):
