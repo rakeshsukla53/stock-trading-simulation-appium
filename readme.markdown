@@ -14,22 +14,24 @@ protect against change. If a new tool becomes available, all tests will remain r
 
 `appium` - Technology leader in mobile automation for both android and iOS
 
-`python` - This is also a widely used programming language and easy to learn. The ecosystem is really specifically 
-when it comes to test automation  
+`python` - This is also a widely used programming language and easy to learn. The ecosystem for test automation is great
+for python
 
 
 # Project Structure 
 
+The structure of the project is designed so well that is a very intuitive and easy to adopt. I have used page object 
+pattern for the application and created separate files for all the other interactions.
 
-| file_name  |                      description                       |            path |
-|------------|:------------------------------------------------------:|----------------:|
-| app.py     |          This is a wrapper for appium client           |    /core/app.py |
-| common.py  |  This contains all the common functions used by tests  | /core/common.py |
-| prop.py    |    This is a placeholder to store global constants     |   /core/prop.py |
-| android.py | File contains all the page objects for the application |   /core/prop.py |
-| tests/     |            Folder containing all the tests             |   /core/prop.py |
+| file_name  |                         description                          |            path |
+|------------|:------------------------------------------------------------:|----------------:|
+| app.py     | This file contains all the functions for the UI interactions |    /core/app.py |
+| common.py  |     This contains all the common functions used by tests     | /core/common.py |
+| prop.py    |       This is a placeholder to store global constants        |   /core/prop.py |
+| android.py |    File contains all the page objects for the application    |   /core/prop.py |
+| tests/     |               Folder containing all the tests                |   /core/prop.py |
 
-we are running all the tests in Android Emulator and our device is Pixel 2. This is the desired capabilities used in 
+We are running all the tests in Android Emulator and our device is Pixel 2. This is the desired capabilities used in 
 the tests. The android APK file is already present in the  `apk` folder.  
 
 android_app = [
@@ -79,6 +81,12 @@ Step 5 - Make sure `ANDROID_HOME` and `JAVA_HOME` are setup in your environment
 
 
 # Running the tests 
+
+Before you run the tests, please make sure that your appium server is running at `http://localhost:4723/wd/hub`
+
+You can run appium server by either typing `appium` on your terminal or by downloading appium desktop client from here
+https://github.com/appium/appium-desktop
+
 
 | Scenario |           command                                      |
 |------|:------------------------------------------------------:|
