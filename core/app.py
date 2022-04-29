@@ -32,7 +32,7 @@ def start_driver(command_executor=appium_webdriver_host, desired_capabilities=No
 
 
 def parse_locator(value, description=None):
-    """Parse page object tuple or string."""
+    """ Parse page object tuple or string. """
     try:
         global locator_path, locator_type
         if isinstance(value, tuple):
@@ -55,19 +55,19 @@ def implicitly_wait(driver, timeout=implicitly_wait_time):
 
 
 def find_element(driver, locator):
-    """Find a single WebElement"""
+    """ Find a single WebElement """
     parse_locator(locator, 'Find element')
     return driver.find_element(locator_type, locator_path)
 
 
 def find_elements(driver, locator):
-    """Find a list of WebElements."""
+    """ Find a list of WebElements. """
     parse_locator(locator, 'Find elements')
     return driver.find_elements(locator_type, locator_path)
 
 
 def tap(driver, locator, idx=None):
-    """ simulate tap gesture on single or multiple elements"""
+    """ simulate tap gesture on single or multiple elements """
     filterwarnings("ignore")
     parse_locator(locator, "Tap")
     if idx:
@@ -88,7 +88,7 @@ def input_text(driver, locator, text, idx=None):
 
 
 def is_element_present(driver, locator, wait_time=2):
-    """Return boolean indicating whether element is present."""
+    """ Return boolean indicating whether element is present. """
     parse_locator(locator, 'Is element present')
     try:
         driver.implicitly_wait(wait_time)
@@ -111,7 +111,7 @@ def explicit_wait(driver, locator, timeout=explicit_wait_time, interval=0.5):
 
 
 def return_text(driver, locator, idx=None):
-    """Return text of an element."""
+    """ Return text of an element. """
     if idx is None:
         parse_locator(locator, 'Return text of')
         return driver.find_element(locator_type, locator_path).text
@@ -127,12 +127,12 @@ def back(driver):
 
 
 def swipe(driver, positions, duration=1000):
-    """Swipe action. X/Y coordinates required for both start and end."""
+    """ Swipe action. X/Y coordinates required for both start and end. """
     start_x, start_y, end_x, end_y = positions
     driver.swipe(start_x, start_y, end_x, end_y, duration)
 
 
 def long_press_by_coordinates(driver, x, y, duration=10000):
-    """Long press by coordinate. Works similar to tap + duration."""
+    """ Long press by coordinate. Works similar to tap + duration. """
     action = TouchAction(driver)
     action.press(x=x, y=y).wait(duration).move_to(x=x, y=y).release().perform()
