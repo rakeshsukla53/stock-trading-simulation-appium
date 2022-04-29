@@ -17,12 +17,14 @@ class BuyAndVerifyStockPurchase(unittest.TestCase):
         driver = self.driver
         SelectCurrencyView.select_us_currency(driver)
         EnterFundAmountView.click_on_continue(driver)
-        AccountView(driver)\
-            .accept_new_features_modal()\
+        AccountView(driver) \
+            .accept_new_features_modal() \
             .search_and_click_stock()
         shares_count = 10
-        order_details_execution = StockView(driver)\
-            .wait_for_stock_page_load()\
+        order_details_execution = StockView(driver) \
+            .wait_for_stock_page_load() \
+            .verify_one_month_chart_loads() \
+            .get_price_date_info_by_random_press() \
             .buy_market_order(shares_count)
         print("{} Order details during execution {}".format(generate_formatted_timestamp(), order_details_execution))
         share_value = order_details_execution["share_value"]
@@ -40,4 +42,3 @@ class BuyAndVerifyStockPurchase(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.driver.quit()
-

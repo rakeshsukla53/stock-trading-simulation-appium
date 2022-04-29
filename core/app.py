@@ -97,7 +97,6 @@ def is_element_present(driver, locator, wait_time=2):
     try:
         driver.implicitly_wait(wait_time)
         driver.find_element(locator_type, locator_path)
-        print("{} is present".format(locator_path))
         return True
     except WebDriverException:
         print("{} is not present".format(locator_path))
@@ -135,3 +134,9 @@ def swipe(driver, positions, duration=1000):
     """Swipe action. X/Y coordinates required for both start and end."""
     start_x, start_y, end_x, end_y = positions
     driver.swipe(start_x, start_y, end_x, end_y, duration)
+
+
+def long_press_by_coordinates(driver, x, y, duration=10000):
+    """Long press by coordinate. Works similar to tap + duration."""
+    action = TouchAction(driver)
+    action.press(x=x, y=y).wait(duration).move_to(x=x, y=y).release().perform()

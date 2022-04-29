@@ -1,10 +1,12 @@
+import random
+
 from app import *
 
 
 class SelectCurrencyView:
     usd_dollar = (
-    '//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/recyclerView"]/android.widget.Button[@index="0"]',
-    'xpath', 'US Dollar')
+        '//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/recyclerView"]/android.widget.Button[@index="0"]',
+        'xpath', 'US Dollar')
 
     @classmethod
     def select_us_currency(cls, driver):
@@ -24,11 +26,11 @@ class AccountView:
     apple_ticker_symbol = "AAPL"
     add_the_first_one_now = ("stock.market.simulator.stock.virtual.trading:id/button", "id", "Add The First One Now")
     search_symbol_name_text = (
-    "stock.market.simulator.stock.virtual.trading:id/search_editText", "id", "Search for Symbol/Name")
+        "stock.market.simulator.stock.virtual.trading:id/search_editText", "id", "Search for Symbol/Name")
     select_select_symbol = ("stock.market.simulator.stock.virtual.trading:id/tabs", "id", "Select Stock Symbol")
     new_features_got_it = ("android:id/button1", "id", "new features got it")
     apple_stock_tab = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/textView" '
-                           'and @text="AAPL Apple Inc."]', "xpath", "Robinhood Markets")
+                       'and @text="AAPL Apple Inc."]', "xpath", "Robinhood Markets")
     watchlist_tab_line = ('//android.widget.TextView[@text="Watchlist"]', "xpath", "WatchList")
     list_of_watchlist_stocks = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/constraintLayout2"]'
                                 '/android.widget.TextView', "xpath", "List of Watchlist Stocks")
@@ -73,7 +75,7 @@ class OrderDetailsView:
                             "Order Details Value")
 
     @classmethod
-    def get_order_history_details(cls, driver,  share_value):
+    def get_order_history_details(cls, driver, share_value):
         # make sure you are in the account view page
         explicit_wait(driver, OrderDetailsView.order_history_tab)
         tap(driver, OrderDetailsView.order_history_tab)
@@ -93,17 +95,25 @@ class OrderDetailsView:
 
 class StockView:
     select_one_month = ("stock.market.simulator.stock.virtual.trading:id/Time_1M", "id", "First One Month")
+    one_month_ago_text = (
+    '//android.widget.TextView[@resource-id="stock.market.simulator.stock.virtual.trading:id/tvTime" '
+    'and @text="1M AGO"]', "xpath", "One Month Ago Text")
+    date_text = ('//android.widget.TextView[@resource-id="stock.market.simulator.stock.virtual.trading:id/tvTime"]',
+                 "xpath", "Date Text")
     stock_buy_button = ("stock.market.simulator.stock.virtual.trading:id/btnBuy", "id", "Button Buy")
     select_market_buy = ('//*[@resource-id="android:id/text1" and @text="  Market Buy"]', "xpath", "Market Buy Order")
     shares_input = ('//android.widget.EditText[@resource-id="stock.market.simulator.stock.virtual.trading:id/tvShare"]',
                     "xpath", "Input Order")
     share_value = ('//android.widget.TextView[@resource-id="stock.market.simulator.stock.virtual.trading:id/tvPrice"]',
                    "xpath", "Shares Price")
-    total_share_price =('//android.widget.EditText[@resource-id="stock.market.simulator.stock.virtual.trading:id/tvTotal"]',
-                        "xpath", "Total Value")
-    place_order = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/btnPlaceOrder" and @text="PLACE ORDER"]',
-                   "xpath", "Place Order")
-    watchlist_star_icon = ("stock.market.simulator.stock.virtual.trading:id/action_favorite", "id", "Watchlist Star Icon")
+    total_share_price = (
+    '//android.widget.EditText[@resource-id="stock.market.simulator.stock.virtual.trading:id/tvTotal"]',
+    "xpath", "Total Value")
+    place_order = (
+    '//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/btnPlaceOrder" and @text="PLACE ORDER"]',
+    "xpath", "Place Order")
+    watchlist_star_icon = (
+    "stock.market.simulator.stock.virtual.trading:id/action_favorite", "id", "Watchlist Star Icon")
     recent_news_text = ('//android.widget.TextView[@text="Recent News"]', "xpath", "Recent News Text")
     list_of_recent_news_text = ('//*[@resource-id="stock.market.simulator.stock.virtual.trading:id/linearLayout6"]/'
                                 'android.widget.TextView[@resource-id="stock.market.'
@@ -117,7 +127,7 @@ class StockView:
         explicit_wait(self.driver, self.select_market_buy)
         tap(self.driver, self.select_market_buy)
         explicit_wait(self.driver, self.shares_input)
-        input_text(self.driver, self.shares_input, shares_count*10)
+        input_text(self.driver, self.shares_input, shares_count * 10)
         share_value = return_text(self.driver, self.share_value)
         total_value = return_text(self.driver, self.total_share_price)
         tap(self.driver, self.place_order)
@@ -134,6 +144,24 @@ class StockView:
         tap(self.driver, self.watchlist_star_icon)
         return self
 
+    def verify_one_month_chart_loads(self):
+        explicit_wait(self.driver, self.select_one_month)
+        tap(self.driver, self.select_one_month)
+        explicit_wait(self.driver, self.one_month_ago_text)
+        return self
+
+    def get_price_date_info_by_random_press(self):
+        """ Long press by coordinate and move along the graph. """
+        action = TouchAction(self.driver)
+        x = random.randint(600, 800)
+        action.long_press(x=400, y=1000).wait(5000).move_to(x=x, y=1000).perform()
+        print("{} date information {}".format(generate_formatted_timestamp(),
+                                              return_text(self.driver, self.date_text)))
+        print("{} price information {}".format(generate_formatted_timestamp(),
+                                               return_text(self.driver, self.share_value)))
+        action.long_press(x=400, y=1000).wait(5000).move_to(x=x, y=1000).release().perform()
+        return self
+
     def wait_for_stock_page_load(self):
         explicit_wait(self.driver, self.stock_buy_button)
         explicit_wait(self.driver, self.select_one_month)
@@ -145,7 +173,6 @@ class StockView:
         count = 0
         end_y = -400
         while count <= 5:
-            print("checking ")
             sleep(3)
             swipe(driver, (150, 400, 150, end_y))
             element_news_section = find_element(driver, StockView.recent_news_text)
@@ -156,4 +183,3 @@ class StockView:
             count += 1
             end_y = -100
         raise "Recent News Text is not found"
-
